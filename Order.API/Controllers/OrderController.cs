@@ -35,27 +35,34 @@ namespace OrderApp.API.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
+            // TODO Implementar CQRS?
             return new string[] { "value1", "value2" };
         }
 
-        // GET: Order/5
         [HttpGet("{id}", Name = "Get")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // PUT: api/Order/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            //TODO implementar alteração, validando se o Status da Ordem Permite
         }
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            //TODO implementar Deleção, validando se o Status da Ordem Permite
         }
+
+        //// PATCH: api/ApiWithActions/5
+        //[HttpPatch("{id}")]
+        //public void Patch(int id)
+        //{
+        //    //TODO implementar Deleção, validando se o Status da Ordem Permite
+        //}
 
         private string GetAccountNumberFromHeader()
         {

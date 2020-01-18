@@ -35,6 +35,7 @@ namespace OrderApp.Application.Services
 
         private Domain.AggregateModels.Order CreateOrder(Customer customer, OrderDto orderDto)
         {
+            //TODO Poderia virar um Factory
             var stock = new Stock {Name = orderDto.Symbol};
             return new Domain.AggregateModels.Order(customer.AccountNumber, stock, orderDto.Price, orderDto.Quantity, orderDto.OrderType.Value, orderDto.OperationType.Value);
         }
