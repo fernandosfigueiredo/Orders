@@ -1,4 +1,5 @@
-﻿using Order.Domain.ValueObjects;
+﻿using MediatR;
+using Order.Domain.ValueObjects;
 using OrderApp.Application.Dtos;
 using OrderApp.Application.Services.Abstractions;
 using OrderApp.Domain.AggregateModels;
@@ -9,13 +10,14 @@ namespace OrderApp.Application.Services
 {
     public class OrderService : IOrderService
     {
-        public ICustomerRepository CustomerRepository { get; }
+        public ICustomerRepository CustomerRepository;
         public NotificationContext NotificationContext;
-
-        public OrderService(ICustomerRepository customerRepository, NotificationContext notificationContext)
+        public IMediator Mediator;
+        public OrderService(ICustomerRepository customerRepository, NotificationContext notificationContext, IMediator mediator)
         {
             CustomerRepository = customerRepository;
             NotificationContext = notificationContext;
+            Mediator = mediator;
         }
 
         public bool PlaceOrder(OrderDto orderDto)
@@ -38,6 +40,8 @@ namespace OrderApp.Application.Services
 
             if (customer.CanPlaceOrder(order.OrderValue(), order.Operation))
             {
+                customer.PlaceOrder(order);
+                
                 //TODO Send a Fuck'n order
                 // Por Domain Event ou via MediatR invocando um Handler
             }

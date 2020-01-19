@@ -1,4 +1,5 @@
-﻿using Order.Domain.ValueObjects;
+﻿using MediatR;
+using Order.Domain.ValueObjects;
 using OrderApp.Domain.BaseModels;
 using OrderApp.Domain.Validators;
 

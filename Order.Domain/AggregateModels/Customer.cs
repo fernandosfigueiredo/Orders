@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
+using MediatR;
 using OrderApp.Domain.BaseModels;
+using OrderApp.Domain.Events;
 using OrderApp.Domain.Validators;
 
 namespace OrderApp.Domain.AggregateModels
@@ -51,6 +53,11 @@ namespace OrderApp.Domain.AggregateModels
                 return true;
 
             return Custody.Balance >= orderAmount;
+        }
+
+        public void PlaceOrder(Order order)
+        {
+            AddDomainEvent(new PlaceOrderEvent(order));
         }
     }
 }

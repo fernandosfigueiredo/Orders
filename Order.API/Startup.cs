@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +30,10 @@ namespace OrderApp.API
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddScoped<NotificationContext>();
+            
+            
+            services.AddMediatR(typeof(Startup));
+
             services.AddMvc(options => options.Filters.Add<NotificationFilter>());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
