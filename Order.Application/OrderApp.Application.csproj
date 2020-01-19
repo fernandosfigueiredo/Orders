@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Order.Domain\OrderApp.Domain.csproj" />
     <ProjectReference Include="..\Order.Infrastructure\OrderApp.Infrastructure.csproj" />
   </ItemGroup>

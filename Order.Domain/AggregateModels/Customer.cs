@@ -1,13 +1,17 @@
-﻿namespace OrderApp.Domain.AggregateModels
+﻿using System.Runtime.InteropServices.ComTypes;
+using OrderApp.Domain.BaseModels;
+using OrderApp.Domain.Validators;
+
+namespace OrderApp.Domain.AggregateModels
 {
-    public class Customer
+    public class Customer : EntityBase
     {
         public string AccountNumber { get; }
-        public string Name { get;  }
+        public string Name { get; }
         public string LastName { get; }
         public int DocumentId { get; }
-        public CustomerStatusType Status { get;  }
-        public Custody Custody { get;  }
+        public CustomerStatusType Status { get; }
+        public Custody Custody { get; }
 
         // TODO Criar validador
 
@@ -19,6 +23,8 @@
             DocumentId = documentId;
             Status = status;
             Custody = custody;
+
+            Validate(this, new CustomerValidator());
         }
 
         public bool CanDoBuyOrSell()

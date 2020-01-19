@@ -2,27 +2,39 @@
 using OrderApp.Application.Dtos;
 using OrderApp.Application.Services.Abstractions;
 using OrderApp.Domain.AggregateModels;
+using OrderApp.Domain.Notification;
 using OrderApp.Infrastructure.Repository.Abstractions;
 
 namespace OrderApp.Application.Services
 {
     public class OrderService : IOrderService
     {
-        public ICustomerRepository CustomerRepository { get; set; }
+        public ICustomerRepository CustomerRepository { get; }
+        public NotificationContext NotificationContext;
 
-        public OrderService(ICustomerRepository customerRepository)
+        public OrderService(ICustomerRepository customerRepository, NotificationContext notificationContext)
         {
             CustomerRepository = customerRepository;
+            NotificationContext = notificationContext;
         }
 
         public bool PlaceOrder(OrderDto orderDto)
         {
             var customer = CustomerRepository.FindByAccountNumber(orderDto.AccountNumber);
 
-            if (!customer.CanDoBuyOrSell())
+            if (customer.Invalid)
+            {
+                NotificationContext.AddNotifications(customer.ValidationResult);
                 return false;
+            }
 
             var order = CreateOrder(customer, orderDto);
+
+            if (order.Invalid)
+            {
+                NotificationContext.AddNotifications(order.ValidationResult);
+                return false;
+            }
 
             if (customer.CanPlaceOrder(order.OrderValue(), order.Operation))
             {

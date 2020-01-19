@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OrderApp.API.Filters;
 using OrderApp.Application.Services;
 using OrderApp.Application.Services.Abstractions;
+using OrderApp.Domain.Notification;
 using OrderApp.Infrastructure.Repository;
 using OrderApp.Infrastructure.Repository.Abstractions;
 
@@ -25,7 +27,8 @@ namespace OrderApp.API
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
-
+            services.AddScoped<NotificationContext>();
+            services.AddMvc(options => options.Filters.Add<NotificationFilter>());
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

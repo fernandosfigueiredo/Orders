@@ -10,7 +10,7 @@ namespace OrderApp.API.Models
         [Required]
         public string Symbol { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Preço deve ser um valor maior que 0 e expresso em centavos")]
+        //[Range(1, int.MaxValue, ErrorMessage = "Preço deve ser um valor maior que 0 e expresso em centavos")]
         public int Price { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage ="Quantidade deve ser um valor maior que 0")]

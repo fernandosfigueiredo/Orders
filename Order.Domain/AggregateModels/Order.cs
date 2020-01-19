@@ -1,15 +1,17 @@
 ﻿using Order.Domain.ValueObjects;
+using OrderApp.Domain.BaseModels;
+using OrderApp.Domain.Validators;
 
 namespace OrderApp.Domain.AggregateModels
 {
     //TODO Order parecia ser meu AggregateRoot mas parece mais um ValueObject
-    public class Order
+    public class Order : EntityBase
     {
-        private string AccountNumber { get; }
-        private Stock Stock { get; }
-        private int Price { get; }
-        private int Quantity { get; }
-        private OrderType Type { get; }
+        public string AccountNumber { get; }
+        public Stock Stock { get; }
+        public int Price { get; }
+        public int Quantity { get; }
+        public OrderType Type { get; }
         public OperationType Operation { get; }
 
         //TODO Implementar validador / Builder?
@@ -21,6 +23,8 @@ namespace OrderApp.Domain.AggregateModels
             Quantity = quantity;
             Type = type;
             Operation = operation;
+
+            Validate(this, new OrderValidator());
         }
 
         public double OrderValue()

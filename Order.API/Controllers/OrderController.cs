@@ -18,6 +18,11 @@ namespace OrderApp.API.Controllers
             OrderService = orderService;
         }
 
+        //TODO criar agendamento de ordens e Stop
+        // 1- Agendamento - Criar uma collection com as ordens, o tipo de Trigger (Data ou Preço)
+        //   - Uma Function que roda diariamente (ou minuto a minuto), ve tem ordens para o DIA, verifica se o Mercado para o Papel já está aberto e envia a ordem, remover da collection de ordens
+        // 2- Stop - Criar collections de ordens stop, assinar o changestream de Cotações, se houver cotação no preço, enviar ordem e remover da collection de ordens
+
         [HttpPost]
         [ValidateModelStateFilter]
         public IActionResult Post([FromBody] OrderModel order)

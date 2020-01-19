@@ -12,7 +12,7 @@ namespace OrderApp.API.Mappers
                 AccountNumber = accountNumber,
                 Symbol = model.Symbol,
                 Price = model.Price,
-                Quantity = model.Price,
+                Quantity = model.Quantity,
                 OperationType = model.Operation,
                 OrderType = model.Type
             };
