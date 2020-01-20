@@ -4,6 +4,6 @@ namespace OrderApp.Infrastructure.Repository.Abstractions
 {
     public interface ICustomerRepository
     {
-        Customer FindByAccountNumber(string accountNumber);
+        Customer FindByAccountNumberWithLock(string accountNumber);
     }
 }

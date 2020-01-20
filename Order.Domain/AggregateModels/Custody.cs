@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Order.Domain.ValueObjects;
+using OrderApp.Domain.ValueObjects;
 
 namespace OrderApp.Domain.AggregateModels
 {

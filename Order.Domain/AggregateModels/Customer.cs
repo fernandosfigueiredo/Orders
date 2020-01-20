@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using MediatR;
-using OrderApp.Domain.BaseModels;
+﻿using OrderApp.Domain.BaseModels;
 using OrderApp.Domain.Events;
 using OrderApp.Domain.Validators;
 

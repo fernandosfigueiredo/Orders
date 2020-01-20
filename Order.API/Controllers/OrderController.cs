@@ -28,10 +28,10 @@ namespace OrderApp.API.Controllers
         public IActionResult Post([FromBody] OrderModel order)
         {
             var accountNumber = GetAccountNumberFromHeader();
-            var orderDto = order.Map(accountNumber);
-            var success = OrderService.PlaceOrder(orderDto);
+            var orderDto = order.Map(accountNumber);// Poderia utilizar o AutoMapper
+            var result = OrderService.PlaceOrder(orderDto);
 
-            if (!success)
+            if (!result)
                 return BadRequest();
 
             return Ok();
@@ -71,6 +71,7 @@ namespace OrderApp.API.Controllers
 
         private string GetAccountNumberFromHeader()
         {
+            // TODO fazer via filter, criar um ModelBase onde os request herdariam, e no modelBase eu Add o AccountNumber
             return "550556";
         }
     }

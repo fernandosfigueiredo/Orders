@@ -1,4 +1,4 @@
-﻿namespace Order.Domain.ValueObjects
+﻿namespace OrderApp.Domain.ValueObjects
 {
     public class Stock
     {

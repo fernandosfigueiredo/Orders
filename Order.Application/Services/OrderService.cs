@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Order.Domain.ValueObjects;
 using OrderApp.Application.Dtos;
 using OrderApp.Application.Services.Abstractions;
 using OrderApp.Domain.AggregateModels;
 using OrderApp.Domain.Notification;
+using OrderApp.Domain.ValueObjects;
 using OrderApp.Infrastructure.Repository.Abstractions;
 
 namespace OrderApp.Application.Services
@@ -22,14 +22,9 @@ namespace OrderApp.Application.Services
 
         public bool PlaceOrder(OrderDto orderDto)
         {
-            var customer = CustomerRepository.FindByAccountNumber(orderDto.AccountNumber);
+            var customer = CustomerRepository.FindByAccountNumberWithLock(orderDto.AccountNumber);
 
-            if (customer.Invalid)
-            {
-                NotificationContext.AddNotifications(customer.ValidationResult);
-                return false;
-            }
-
+            //TODO Poderia virar um Factory
             var order = CreateOrder(customer, orderDto);
 
             if (order.Invalid)
@@ -41,19 +36,19 @@ namespace OrderApp.Application.Services
             if (customer.CanPlaceOrder(order.OrderValue(), order.Operation))
             {
                 customer.PlaceOrder(order);
-                
-                //TODO Send a Fuck'n order
-                // Por Domain Event ou via MediatR invocando um Handler
+                //var orderEvent = new PlaceOrderEvent(order);
+                //Mediator.Send(orderEvent);
+                //TODO Por Domain Event ou via MediatR invocando um Handler
             }
 
+            // TODO Retornar um Response<Order>
             return true;
         }
 
-        private Domain.AggregateModels.Order CreateOrder(Customer customer, OrderDto orderDto)
+        private Order CreateOrder(Customer customer, OrderDto orderDto)
         {
-            //TODO Poderia virar um Factory
-            var stock = new Stock {Name = orderDto.Symbol};
-            return new Domain.AggregateModels.Order(customer.AccountNumber, stock, orderDto.Price, orderDto.Quantity, orderDto.OrderType.Value, orderDto.OperationType.Value);
+            var stock = new Stock { Name = orderDto.Symbol };// TODO Vem do Repositorio
+            return new Order(customer.AccountNumber, stock, orderDto.Price, orderDto.Quantity, orderDto.OrderType.Value, orderDto.OperationType.Value);
         }
     }
 }

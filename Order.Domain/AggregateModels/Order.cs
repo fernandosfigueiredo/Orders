@@ -1,11 +1,10 @@
-﻿using MediatR;
-using Order.Domain.ValueObjects;
-using OrderApp.Domain.BaseModels;
+﻿using OrderApp.Domain.BaseModels;
 using OrderApp.Domain.Validators;
+using OrderApp.Domain.ValueObjects;
 
 namespace OrderApp.Domain.AggregateModels
 {
-    //TODO Order parecia ser meu AggregateRoot mas parece mais um ValueObject
+    //TODO Order parecia ser meu AggregateRoot 
     public class Order : EntityBase
     {
         public string AccountNumber { get; }
